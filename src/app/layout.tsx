@@ -1,4 +1,6 @@
 import StoreProvider from "@/lib/redux/store/provider";
+import WowJsProvider from "@/utils/WowJsProvider";
+import "animate.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -29,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <StoreProvider>
-        {children}
+          <WowJsProvider>{children}</WowJsProvider>
         </StoreProvider>
       </body>
     </html>
