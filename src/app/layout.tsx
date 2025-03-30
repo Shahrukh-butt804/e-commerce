@@ -2,17 +2,20 @@ import StoreProvider from "@/lib/redux/store/provider";
 import WowJsProvider from "@/utils/WowJsProvider";
 import "animate.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto, Jost } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/ui/header";
+import Foot from "@/components/ui/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jost = Jost({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-Jost",
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const roboto = Roboto({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto",
 });
 
 export const metadata: Metadata = {
@@ -27,11 +30,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${roboto.variable} ${jost.variable} antialiased`}>
         <StoreProvider>
-          <WowJsProvider>{children}</WowJsProvider>
+          <WowJsProvider>
+            <Header/>
+            {children}
+            <Foot/>
+          </WowJsProvider>
         </StoreProvider>
       </body>
     </html>

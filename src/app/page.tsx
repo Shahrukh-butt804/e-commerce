@@ -9,8 +9,6 @@ export default function Home() {
 
   const { data: posts, error, isLoading } = useGetPostsQuery(undefined);
 
- 
-
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
 
