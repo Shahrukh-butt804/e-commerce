@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
 import { RiShoppingBag4Fill } from "react-icons/ri";
+import Sheet from "../sheet";
 import { Button } from "./button";
-import Sheet from "../sheet"
 const Header = () => {
+
+
   return (
     <header className="flex border-b mb-5 border-gray-300 py-3 px-4 sm:px-10 bg-white min-h-[65px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center gap-4 max-w-screen-xl mx-auto w-full">
