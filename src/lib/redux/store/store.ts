@@ -1,20 +1,22 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import counterReducer from '../slices/counterSlice';
-import { apiSlice } from '../api/jsonApi'; // Import RTK Query API slice
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import counterReducer from "../slices/counterSlice";
+import { apiSlice } from "../api/jsonApi"; // Import RTK Query API slice
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+import { productApiSlice } from "../api/productApi";
 
 // Redux Persist Configuration
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['counter'], // Persist only specific reducers (not api)
+  whitelist: ["counter"], // Persist only specific reducers (not api)
 };
 
 // Combine Reducers
 const rootReducer = combineReducers({
   counter: counterReducer,
   [apiSlice.reducerPath]: apiSlice.reducer, // Add RTK Query API reducer
+  [productApiSlice.reducerPath]: productApiSlice.reducer,
 });
 
 // Persisted Reducer
@@ -26,7 +28,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false, // Required for redux-persist
-    }).concat(apiSlice.middleware), // Add RTK Query Middleware
+    }).concat(apiSlice.middleware,productApiSlice.middleware) // Add RTK Query Middleware
 });
 
 // Persistor for PersistGate

@@ -1,7 +1,14 @@
+"use client"
 import React from "react";
-import { Button } from "./ui/button";
+import { IMAGE_URL } from "@/constants/constant";
+import { useGetAllProductsQuery } from "@/lib/redux/api/productApi";
+import Spinner from "./spinner";
 
 export default function ProductCard() {
+
+  const {data , isFetching} =  useGetAllProductsQuery({})
+  // console.log("🚀 ~ ProductCard ~ data:", data);
+
   const plants = [
     {
       name: "Peace Lily",
@@ -12,32 +19,17 @@ export default function ProductCard() {
       imgSrc:
         "https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png",
     },
-    {
-      name: "Monstera",
-      type: "Outdoor",
-      price: "$45.00",
-      bgColor: "bg-teal-500",
-      textColor: "text-teal-500",
-      imgSrc:
-        "https://user-images.githubusercontent.com/2805249/64069998-305de300-cc9a-11e9-8ae7-5a0fe00299f2.png",
-    },
-    {
-      name: "Oak Tree",
-      type: "Outdoor",
-      price: "$68.50",
-      bgColor: "bg-purple-500",
-      textColor: "text-purple-500",
-      imgSrc:
-        "https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png",
-    },
+
   ];
 
+  if(isFetching ) return <Spinner />
+  
   return (
-    <div className="p-1 flex flex-wrap items-center justify-center">
-      {plants.map((plant, index) => (
+    <div className="p-1 flex flex-wrap items-center justify-start">
+      {data?.products?.length > 0 && data?.products.map((product : any, index : number) => (
         <div
           key={index}
-          className={`flex-shrink-0 m-6 relative overflow-hidden ${plant.bgColor} rounded-lg max-w-xs shadow-lg`}
+          className={`flex-shrink-0 m-6 relative overflow-hidden ${product?.bgColor} rounded-lg max-w-[250px] shadow-lg`}
         >
           <svg
             className="absolute bottom-0 left-0 mb-8"
@@ -73,19 +65,19 @@ export default function ProductCard() {
               }}
             ></div>
             <img
-              className="relative w-40"
-              src={plant.imgSrc}
-              alt={plant.name}
+              className="relative w-40 h-40"
+              src={`${IMAGE_URL}/${product?.image}`}
+              alt={product?.name}
             />
           </div>
           <div className="relative text-white px-6 pb-6 mt-6">
-            <span className="block opacity-75 -mb-1">{plant.type}</span>
+            <span className="block opacity-75 -mb-1">{product?.category}</span>
             <div className="flex justify-between">
-              <span className="block font-semibold text-xl">{plant.name}</span>
+              <span className="block font-semibold text-[13px]">{product?.name}</span>
               <span
-                className={`block bg-white rounded-full ${plant.textColor} text-xs font-bold px-3 py-2 leading-none flex items-center`}
+                className={`block bg-white rounded-full ${product?.textColor} text-xs font-bold px-3 py-2 leading-none flex items-center`}
               >
-                {plant.price}
+                {product?.price}
               </span>
             </div>
           </div>
