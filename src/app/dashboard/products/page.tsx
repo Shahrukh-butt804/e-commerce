@@ -1,55 +1,8 @@
 "use client";
 
+import CategoryFilter from "@/components/categoryFilter";
 import ProductTable from "@/components/gridCard";
 import ProductCard from "@/components/productCard";
-
-const products = [
-  {
-    name: "Nike Air MX Super 2500 - Red",
-    image:
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=500&q=60",
-    price: 449,
-    originalPrice: 699,
-    discount: 39,
-    rating: 5.0,
-  },
-  {
-    name: "Adidas Ultra Boost - Blue",
-    image:
-      "https://images.unsplash.com/photo-1526178619643-6cc5b928a9a2?auto=format&fit=crop&w=500&q=60",
-    price: 299,
-    originalPrice: 499,
-    discount: 40,
-    rating: 4.5,
-  },
-  {
-    name: "Puma Running Shoes - Black",
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=60",
-    price: 199,
-    originalPrice: 299,
-    discount: 33,
-    rating: 4.8,
-  },
-  {
-    name: "Reebok Classic - White",
-    image:
-      "https://images.unsplash.com/photo-1514995669114-6081e934b693?auto=format&fit=crop&w=500&q=60",
-    price: 150,
-    originalPrice: 250,
-    discount: 40,
-    rating: 4.2,
-  },
-  {
-    name: "Under Armour Speedform - Green",
-    image:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=500&q=60",
-    price: 179,
-    originalPrice: 279,
-    discount: 36,
-    rating: 4.6,
-  },
-];
 
 const ProductList = () => {
   return (
@@ -61,7 +14,14 @@ const ProductList = () => {
 
 import React, { useState } from "react";
 
-const colors = ["White", "Beige", "Blue", "Brown", "Green", "Purple"];
+const colors = {
+  name :"Colors",
+  value :["White", "Beige", "Blue", "Brown", "Green", "Purple"]
+};
+const sizes = {
+  name: "Sizes",
+  value: ["S", "M", "L", "XL"]
+};
 
 export default function page() {
   const [selectedColors, setSelectedColors] = useState<any>([]);
@@ -78,9 +38,10 @@ export default function page() {
           : [...prev, color] // Add if not selected
     );
   };
+
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-white ">
         <div>
           <div
             className="relative z-30 lg:hidden"
@@ -125,103 +86,11 @@ export default function page() {
                     </svg>
                   </button>
                 </div>
+                  
+                  
+                  {/* mobile Category filter  */}
                 <form className="mt-4 border-t border-gray-200">
-                  <h3 className="sr-only">Categories</h3>
-                  <ul
-                    role="list"
-                    className="px-2 py-3 font-medium text-gray-900"
-                  >
-                    <li>
-                      <a href="#" className="block px-2 py-3">
-                        Totes
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-2 py-3">
-                        Backpacks
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-2 py-3">
-                        Travel Bags
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-2 py-3">
-                        Hip Bags
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="block px-2 py-3">
-                        Laptop Sleeves
-                      </a>
-                    </li>
-                  </ul>
-
-                  {/* Colors filter */}
-                  <div className="border-b border-gray-200 py-6 mx-4">
-                    <h3 className="-my-3 flow-root">
-                      <button
-                        type="button"
-                        className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
-                        onClick={() => setIsOpen(!isOpen)}
-                        aria-expanded={isOpen}
-                      >
-                        <span className="font-medium text-gray-900">Color</span>
-                        <span className="ml-6 flex items-center">
-                          {isOpen ? (
-                            <svg
-                              className="size-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                d="M4 10h12"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              className="size-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                            </svg>
-                          )}
-                        </span>
-                      </button>
-                    </h3>
-
-                    {isOpen && (
-                      <div className="pt-6">
-                        <div className="space-y-4">
-                          {colors.map((color, index) => (
-                            <div key={color} className="flex gap-3">
-                              <div className="flex h-5 items-center">
-                                <input
-                                  id={`filter-color-${index}`}
-                                  type="checkbox"
-                                  value={color}
-                                  checked={selectedColors.includes(color)}
-                                  onChange={() => handleCheckboxChange(color)}
-                                  className="size-4 border border-gray-300 rounded-sm checked:bg-indigo-600 checked:border-indigo-600"
-                                />
-                              </div>
-                              <label
-                                htmlFor={`filter-color-${index}`}
-                                className="text-sm text-gray-600"
-                              >
-                                {color}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                <CategoryFilter category={[colors,sizes]} />
                 </form>
               </div>
             </div>
@@ -381,92 +250,12 @@ export default function page() {
                 Products
               </h2>
 
+
+
+                {/* Desktop Category filter */}
               <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                 <form className="hidden lg:block">
-                  <h3 className="sr-only">Categories</h3>
-                  <ul
-                    role="list"
-                    className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                  >
-                    <li>
-                      <a href="#">Totes</a>
-                    </li>
-                    <li>
-                      <a href="#">Backpacks</a>
-                    </li>
-                    <li>
-                      <a href="#">Travel Bags</a>
-                    </li>
-                    <li>
-                      <a href="#">Hip Bags</a>
-                    </li>
-                    <li>
-                      <a href="#">Laptop Sleeves</a>
-                    </li>
-                  </ul>
-                  <div className="border-b border-gray-200 py-6">
-                    <h3 className="-my-3 flow-root">
-                      <button
-                        type="button"
-                        className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
-                        onClick={() => setIsOpen(!isOpen)}
-                        aria-expanded={isOpen}
-                      >
-                        <span className="font-medium text-gray-900">Color</span>
-                        <span className="ml-6 flex items-center">
-                          {isOpen ? (
-                            <svg
-                              className="size-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                d="M4 10h12"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              className="size-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                            </svg>
-                          )}
-                        </span>
-                      </button>
-                    </h3>
-
-                    {isOpen && (
-                      <div className="pt-6">
-                        <div className="space-y-4">
-                          {colors.map((color, index) => (
-                            <div key={color} className="flex gap-3">
-                              <div className="flex h-5 items-center">
-                                <input
-                                  id={`filter-color-${index}`}
-                                  type="checkbox"
-                                  value={color}
-                                  checked={selectedColors.includes(color)}
-                                  onChange={() => handleCheckboxChange(color)}
-                                  className="size-4 border border-gray-300 rounded-sm checked:bg-indigo-600 checked:border-indigo-600"
-                                />
-                              </div>
-                              <label
-                                htmlFor={`filter-color-${index}`}
-                                className="text-sm text-gray-600"
-                              >
-                                {color}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <CategoryFilter category={[colors,sizes]} />
                 </form>
 
                 {/* Product List */}
