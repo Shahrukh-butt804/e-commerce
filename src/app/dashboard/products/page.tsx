@@ -24,20 +24,9 @@ const sizes = {
 };
 
 export default function page() {
-  const [selectedColors, setSelectedColors] = useState<any>([]);
-  const [isOpen, setIsOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [toggleCardView, setToggleCardView] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
-
-  const handleCheckboxChange = (color: any) => {
-    setSelectedColors(
-      (prev: any) =>
-        prev.includes(color)
-          ? prev.filter((c: any) => c !== color) // Remove if already selected
-          : [...prev, color] // Add if not selected
-    );
-  };
 
   return (
     <>
@@ -249,8 +238,6 @@ export default function page() {
               <h2 id="products-heading" className="sr-only">
                 Products
               </h2>
-
-
 
                 {/* Desktop Category filter */}
               <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
