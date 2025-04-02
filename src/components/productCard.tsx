@@ -3,8 +3,10 @@ import React from "react";
 import { IMAGE_URL } from "@/constants/constant";
 import { useGetAllProductsQuery } from "@/lib/redux/api/productApi";
 import Spinner from "./spinner";
+import { useRouter } from "next/navigation"
 
 export default function ProductCard() {
+  const router = useRouter();
   const { data, isFetching, isError } = useGetAllProductsQuery({});
   // console.log("🚀 ~ ProductCard ~ data:", data);
 
@@ -28,8 +30,9 @@ export default function ProductCard() {
       {data?.products?.length > 0 &&
         data?.products.map((product: any, index: number) => (
           <div
+            onClick={() => router.push("/dashboard/products/product/" + product._id)}
             key={index}
-            className={`flex-shrink-0 m-6 relative overflow-hidden ${product?.bgColor} rounded-lg max-w-[250px] shadow-lg`}
+            className={`flex-shrink-0 m-6 relative overflow-hidden ${product?.bgColor} rounded-lg max-w-[250px] shadow-lg cursor-pointer`}
           >
             <svg
               className="absolute bottom-0 left-0 mb-8"

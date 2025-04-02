@@ -2,8 +2,10 @@ import { useGetAllProductsQuery } from "@/lib/redux/api/productApi";
 import React from "react";
 import Spinner from "./spinner";
 import { IMAGE_URL } from "@/constants/constant";
+import { useRouter } from "next/navigation";
 
 export default function ProductTable() {
+    const router = useRouter();
   const { data, isFetching ,isError} = useGetAllProductsQuery({});
   // console.log("🚀 ~ ProductCard ~ data:", data);
 
@@ -34,7 +36,9 @@ export default function ProductTable() {
         </thead>
         <tbody>
           {data?.products?.map((product: any, index: number) => (
-            <tr key={index} className="border-t">
+            <tr 
+            onClick={() => router.push("/dashboard/products/product/" + product._id)}
+            key={index} className="border-t cursor-pointer hover:bg-slate-200">
               <td className="py-2 px-4 border-b">
                 <img
                   className="w-16 h-16 object-cover rounded"
