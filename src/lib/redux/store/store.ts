@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { productApiSlice } from "../api/productApi";
 import cartReducer from "../slices/cartState";
+import { cartApiSlice } from "../api/cartApi";
 
 // Redux Persist Configuration
 const persistConfig = {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   cart : cartReducer,
   [apiSlice.reducerPath]: apiSlice.reducer, // Add RTK Query API reducer
   [productApiSlice.reducerPath]: productApiSlice.reducer,
+  [cartApiSlice.reducerPath]: cartApiSlice.reducer,
 });
 
 // Persisted Reducer
@@ -30,7 +32,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false, // Required for redux-persist
-    }).concat(apiSlice.middleware,productApiSlice.middleware) // Add RTK Query Middleware
+    }).concat(apiSlice.middleware,productApiSlice.middleware,cartApiSlice.middleware) // Add RTK Query Middleware
 });
 
 // Persistor for PersistGate

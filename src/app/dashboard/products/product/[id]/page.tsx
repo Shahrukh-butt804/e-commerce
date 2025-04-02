@@ -1,17 +1,40 @@
 "use client";
 import Spinner from "@/components/spinner";
 import { IMAGE_URL } from "@/constants/constant";
+import { useAddToCartMutation } from "@/lib/redux/api/cartApi";
 import { useGetProductByIdQuery } from "@/lib/redux/api/productApi";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ProductPage = () => {
-  const [image, setImage] = useState(1);
   const { id } = useParams<{ id: string }>();
+  const [image, setImage] = useState(1);
+  const [value, setValue] = useState(1);
+
   // console.log("🚀 ~ ProductPage ~ id:", id)
   const { data, isFetching } = useGetProductByIdQuery({ id });
+  const [addToCart, { isLoading }] = useAddToCartMutation();
+
   const product = data?.product;
   // console.log("🚀 ~ ProductPage ~ product:", product);
+
+  const handleDecrement = () => {
+    setValue((prev) => Math.max(1, prev - 1));
+  };
+
+  const handleIncrement = () => {
+    setValue((prev) => prev + 1);
+  };
+
+  async function handleAddToCart() {
+    const result = await addToCart({ productId: product._id, quantity: value });
+    if (result?.data?.status == 200) {
+      alert("Product added to cart");
+      setValue(1);
+    } else {
+      alert("Something went wrong");
+    }
+  }
 
   if (isFetching) return <Spinner />;
 
@@ -75,11 +98,71 @@ const ProductPage = () => {
             <p className="text-gray-500">{product?.description}</p>
             <div className="flex py-4 space-x-4">
               <button
+                disabled={isLoading}
                 type="button"
-                className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+                className="h-12 px-4  font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </button>
+
+              {/* Quatity */}
+              <div className="py-2 px-3 inline-block bg-white border border-gray-200 rounded-lg">
+                <div className="flex items-center gap-x-1.5">
+                  <button
+                    disabled={isLoading}
+                    type="button"
+                    className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                    onClick={handleDecrement}
+                    aria-label="Decrease"
+                  >
+                    <svg
+                      className="shrink-0 size-3.5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14"></path>
+                    </svg>
+                  </button>
+                  <input
+                    className="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 appearance-none"
+                    type="text"
+                    aria-roledescription="Number field"
+                    value={value}
+                    readOnly
+                  />
+                  <button
+                    disabled={isLoading}
+                    type="button"
+                    className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                    onClick={handleIncrement}
+                    aria-label="Increase"
+                  >
+                    <svg
+                      className="shrink-0 size-3.5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5v14"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
