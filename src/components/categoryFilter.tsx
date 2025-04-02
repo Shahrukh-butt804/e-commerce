@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 export default function CategoryFilter({ category }: any) {
 
@@ -91,9 +91,11 @@ export default function CategoryFilter({ category }: any) {
           </div>
         )}
       </div> */}
-      {category?.map((category : any) =>{
+      {category?.map((category : any , index : number) =>{
         return(
+          <Fragment key={index}>
           <CategoryComp category={category} />
+          </Fragment>
         )
       })
 
