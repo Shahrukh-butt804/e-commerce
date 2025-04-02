@@ -4,7 +4,7 @@ import Spinner from "./spinner";
 import { IMAGE_URL } from "@/constants/constant";
 
 export default function ProductTable() {
-  const { data, isFetching } = useGetAllProductsQuery({});
+  const { data, isFetching ,isError} = useGetAllProductsQuery({});
   // console.log("🚀 ~ ProductCard ~ data:", data);
 
   const plants = [
@@ -17,7 +17,9 @@ export default function ProductTable() {
     },
   ];
 
-  if (isFetching) return <Spinner />;
+  if (isFetching) return <div className="grid place-content-center"><Spinner /></div>;
+  if (isError) return <div className="text-red-500 text-center text-lg">Something Went Wrong!</div>;
+
 
   return (
     <div className="p-4">
@@ -26,7 +28,7 @@ export default function ProductTable() {
           <tr>
             <th className="py-2 px-4 border-b text-left">Image</th>
             <th className="py-2 px-4 border-b text-left">Name</th>
-            <th className="py-2 px-4 border-b text-left">Type</th>
+            <th className="py-2 px-4 border-b text-left">Category</th>
             <th className="py-2 px-4 border-b text-left">Price</th>
           </tr>
         </thead>
@@ -41,7 +43,7 @@ export default function ProductTable() {
                 />
               </td>
               <td className="py-2 px-4 border-b">{product.name}</td>
-              <td className="py-2 px-4 border-b">{product.type}</td>
+              <td className="py-2 px-4 border-b">{product.category}</td>
               <td className="py-2 px-4 border-b font-bold">{product.price}</td>
             </tr>
           ))}

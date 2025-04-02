@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { RxValue } from "react-icons/rx";
+import { useState } from "react";
 
 export default function CategoryFilter({ category }: any) {
 

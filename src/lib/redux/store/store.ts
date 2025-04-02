@@ -4,6 +4,7 @@ import { apiSlice } from "../api/jsonApi"; // Import RTK Query API slice
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { productApiSlice } from "../api/productApi";
+import cartReducer from "../slices/cartState";
 
 // Redux Persist Configuration
 const persistConfig = {
@@ -15,6 +16,7 @@ const persistConfig = {
 // Combine Reducers
 const rootReducer = combineReducers({
   counter: counterReducer,
+  cart : cartReducer,
   [apiSlice.reducerPath]: apiSlice.reducer, // Add RTK Query API reducer
   [productApiSlice.reducerPath]: productApiSlice.reducer,
 });

@@ -4,13 +4,13 @@ import Sheet from "../sheet";
 import { Button } from "./button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { toggleState } from "@/lib/redux/slices/cartState";
 
 const Header = ({ logo, menuItems, buttonLabel }: any) => {
-
   // finding pathname
-  const pathname = usePathname()
-
-
+  const pathname = usePathname();
+  const dispatch = useDispatch();
 
   return (
     <header className="flex border-b mb-5 border-gray-300 py-3 px-4 sm:px-10 bg-white min-h-[65px] tracking-wide relative z-10">
@@ -30,7 +30,6 @@ const Header = ({ logo, menuItems, buttonLabel }: any) => {
                   href={`${item.link}`}
                   className={`font-medium lg:hover:text-blue-700 block text-[15px] ${
                     pathname === item.link ? "text-blue-700" : "text-slate-900"
-                    
                   }`}
                 >
                   {item.name}
@@ -42,7 +41,10 @@ const Header = ({ logo, menuItems, buttonLabel }: any) => {
                 href="#"
                 className="font-medium lg:hover:text-blue-700 block text-[15px]"
               >
-                <RiShoppingBag4Fill className="w-6 h-6" />
+                <RiShoppingBag4Fill
+                  onClick={() => dispatch(toggleState())}
+                  className="w-6 h-6"
+                />
               </a>
             </li>
             <li className="max-lg:border-b max-lg:py-3 px-3">
